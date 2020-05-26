@@ -1,47 +1,52 @@
-const User = require('../models/user');
+const User = require("../models/user");
 
-module.exports.getUsers = (req, res) => {
+module.exports.getUsers = (err, req, res, next) => {
   User.find({})
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: 'Произошла ошибка', err }));
+    .catch(next);
 };
 
-module.exports.getUserById = (req, res) => {
+module.exports.getUserById = (err, req, res, next) => {
   User.findById(req.params.id)
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: 'Нет пользователя с таким id', err }));
+    .catch(next);
 };
 
-module.exports.createUser = (req, res) => {
+module.exports.createUser = (err, req, res, next) => {
   const { name, about, avatar } = req.body;
-  console.log(req.body);
   User.create({ name, about, avatar })
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: 'Произошла ошибка', err }));
+    .catch(next);
 };
 
 // обновление профиля пользователя
-module.exports.updateUserProfile = (req, res) => {
+module.exports.updateUserProfile = (err, req, res, next) => {
   const { name, about } = req.body;
-  console.log(req.body);
-  User.findByIdAndUpdate(req.user._id, { name, about }, {
-    new: true, // обработчик then получит на вход обновлённую запись
-    runValidators: true, // данные будут валидированы перед изменением
-    upsert: false, // если пользователь не найден, он не будет создан
-  })
+  User.findByIdAndUpdate(
+    req.user._id,
+    { name, about },
+    {
+      new: true, // обработчик then получит на вход обновлённую запись
+      runValidators: true, // данные будут валидированы перед изменением
+      upsert: false, // если пользователь не найден, он не будет создан
+    }
+  )
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: 'Произошла ошибка', err }));
+    .catch(next);
 };
 
 // обновление аватара пользователя
-module.exports.updateUserAvatar = (req, res) => {
+module.exports.updateUserAvatar = (err, req, res, next) => {
   const { avatar } = req.body;
-  console.log(req.body);
-  User.findByIdAndUpdate(req.user._id, { avatar }, {
-    new: true, // обработчик then получит на вход обновлённую запись
-    runValidators: true, // данные будут валидированы перед изменением
-    upsert: false, // если пользователь не найден, он не будет создан
-  })
+  User.findByIdAndUpdate(
+    req.user._id,
+    { avatar },
+    {
+      new: true, // обработчик then получит на вход обновлённую запись
+      runValidators: true, // данные будут валидированы перед изменением
+      upsert: false, // если пользователь не найден, он не будет создан
+    }
+  )
     .then((user) => res.send({ data: user }))
-    .catch((err) => res.status(500).send({ message: 'Произошла ошибка', err }));
+    .catch(next);
 };

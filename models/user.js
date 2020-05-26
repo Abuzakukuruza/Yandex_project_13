@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
+const mongoose = require("mongoose");
+const validator = require("validator");
 
 
 const userSchema = new mongoose.Schema({
@@ -14,8 +14,8 @@ const userSchema = new mongoose.Schema({
   about: {
     type: String,
     required: true,
-    minlength: [2, 'минимальная длина имени 2 символа'],
-    maxlength: [30, 'максимальная длина имени 30 символов'],
+    minlength: [2, "минимальная длина имени 2 символа"],
+    maxlength: [30, "максимальная длина имени 30 символов"],
   },
 
   avatar: {
@@ -31,4 +31,4 @@ const userSchema = new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
