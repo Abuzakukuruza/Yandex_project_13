@@ -32,13 +32,11 @@ app.use("*", (req, res) => {
   res.status(404).json({ message: "Запрашиваемый ресурс не найден" });
 });
 
-app.use(function (err, req, res, next) {
-  if (err) {
-    console.error(err);
-    return res
-      .status(err.status)
-      .send({ status: err.status, message: err.message });
-  }
+app.use((err, req, res) => {
+  console.error(err);
+  return res
+    .status(err.status)
+    .send({ status: err.status, message: err.message });
 });
 
 app.listen(PORT, () => {
