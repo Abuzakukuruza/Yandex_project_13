@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const NotFoundError = require("../errors/notFoundError");
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
@@ -8,14 +9,14 @@ module.exports.getUsers = (req, res, next) => {
 
 module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.id)
-    .then((user) => res.send({ data: user }))
-    .catch(next);
+    .orFail(() => new NotFoundError("Карточка не найдена"))
+    .catch(next)
+    .then((user) => res.send({ data: user }));
 };
 
 module.exports.createUser = (req, res, next) => {
   const { name, about, avatar } = req.body;
   User.create({ name, about, avatar })
-    .orFail()
     .then((user) => res.send({ data: user }))
     .catch(next);
 };

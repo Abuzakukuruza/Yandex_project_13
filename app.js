@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 
 const usersRouter = require("./routes/users");
 const cardsRouter = require("./routes/cards");
+const NotFoundError = require("./errors/notFoundError");
 
 const { PORT = 3000 } = process.env;
 const app = express();
@@ -31,14 +32,13 @@ app.use("/cards", cardsRouter);
 app.use("*", (req, res) => {
   res.status(404).json({ message: "Запрашиваемый ресурс не найден" });
 });
-
-app.use((err, req, res) => {
-  console.error(err);
+/* eslint-disable */
+app.use((err, req, res, next) => {
   return res
-    .status(err.status)
+    .status(NotFoundError.statusCode || 500)
     .send({ status: err.status, message: err.message });
 });
-
+/* eslint-enable */
 app.listen(PORT, () => {
   console.log(`App listening on port ${PORT}`);
 });
