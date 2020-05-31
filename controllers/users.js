@@ -10,8 +10,8 @@ module.exports.getUsers = (req, res, next) => {
 module.exports.getUserById = (req, res, next) => {
   User.findById(req.params.id)
     .orFail(() => new NotFoundError("Карточка не найдена"))
-    .catch(next)
-    .then((user) => res.send({ data: user }));
+    .then((user) => res.send({ data: user }))
+    .catch(next);
 };
 
 module.exports.createUser = (req, res, next) => {

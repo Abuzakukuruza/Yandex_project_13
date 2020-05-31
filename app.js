@@ -35,7 +35,7 @@ app.use("*", (req, res) => {
 /* eslint-disable */
 app.use((err, req, res, next) => {
   return res
-    .status(NotFoundError.statusCode || 500)
+    .status(err.statusCode || 500)
     .send({ status: err.status, message: err.message });
 });
 /* eslint-enable */

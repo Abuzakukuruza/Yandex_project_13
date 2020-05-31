@@ -38,4 +38,3 @@ eslint, eslint-config-airbnb-base, eslint-plugin-import, express, mongoose, body
 - запрос **GET/users/:userId** возвращает конкретного пользователя
 - запрос **POST/users** создаёт пользователя. В теле POST-запроса на создание пользователя передается JSON-объект с тремя полями: **name**, **about** и **avatar**.
 
-
